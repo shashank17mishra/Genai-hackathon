@@ -42,6 +42,8 @@ It integrates **three intelligent subsystems** forming a closed cognitive feedba
 
 > **Adaptive Loop:**  
 > Learner → Cognitive Mirror → AI Bridge → Learning → Genome Update → Mirror Recalibration  
+<img width="1919" height="993" alt="image" src="https://github.com/user-attachments/assets/bd96cd37-b046-4b9d-945a-153d11955e22" />
+
 
 ---
 
