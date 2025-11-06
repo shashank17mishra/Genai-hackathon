@@ -61,7 +61,7 @@ It integrates **three intelligent subsystems** forming a closed cognitive feedba
 
 ### 1. Clone the Repository  
 ```bash
-git clone https://github.com/your-username/cognitive-quest.git
+git clone https://github.com/shashank17mishra/Genai-hackathon
 cd cognitive-quest
 2. Install Dependencies
 bash
@@ -90,14 +90,14 @@ Launch the frontend (React + Tailwind).
 Interact with the dashboard — the Cognitive Mirror adjusts dynamically.
 
 Complete a recommended learning activity — watch how the Skill Genome updates in real time.
-
+---
 🎯 Expected Output
 Interactive dashboard with a dynamic skill tree
 
 AI-based content recommendations using Gemini API
 
 Real-time progress tracking and adaptive learning evolution
-
+---
 👥 Team Members
 Name	Role
 Anshuman	Concept Design, System Architecture
