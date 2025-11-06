@@ -1,0 +1,5 @@
+{
+  "name": "Quester",
+  "description": "A cognitive-learning webapp that adapts to each student’s mind map, generating personalized AI feedback, skills, avatars, and portfolios using the Gemini API.",
+  "requestFramePermissions": []
+}

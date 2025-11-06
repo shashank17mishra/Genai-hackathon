@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quester</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://aistudiocdn.com/reactflow@^11.11.4/dist/style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      /* --- NEW REFRESHED PALETTE --- */
+      --font-header: 'Orbitron', sans-serif;
+      --font-body: 'Roboto Mono', monospace;
+      
+      --bg-color: #0c0c1e; /* Deep Space Blue */
+      --text-color: #F5F5F5; /* Soft White */
+      --border-color: #E0E0E0; /* Light Gray */
+      
+      --primary-color: #4D79FF; /* Electric Blue */
+      --secondary-color: #FF6B6B; /* Coral Red */
+      --accent-color: #1EEA7E; /* Bright Green */
+    }
+
+    html, body, #root {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-body);
+      font-size: 16px;
+    }
+
+    /* --- NEW LAVA LAMP BACKGROUND --- */
+    .lava-lamp-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+      background: var(--bg-color);
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+      filter: blur(100px); /* Increased blur for more subtlety */
+      opacity: 0.4; /* Decreased opacity */
+      will-change: transform;
+    }
+    .blob1 {
+      width: 40vmax; /* Smaller */
+      height: 40vmax; /* Smaller */
+      left: -15vmax;
+      top: -15vmax;
+      background: var(--primary-color);
+      animation: move1 50s infinite alternate ease-in-out; /* Slower */
+    }
+    .blob2 {
+      width: 35vmax; /* Smaller */
+      height: 35vmax; /* Smaller */
+      right: -10vmax;
+      bottom: -15vmax;
+      background: var(--secondary-color);
+      animation: move2 55s infinite alternate ease-in-out; /* Slower */
+    }
+    .blob3 {
+      width: 30vmax; /* Smaller */
+      height: 30vmax; /* Smaller */
+      left: 25vw;
+      top: 25vh;
+      background: var(--accent-color);
+      animation: move3 45s infinite alternate ease-in-out; /* Slower */
+    }
+    @keyframes move1 {
+      from { transform: translate(0, 0) rotate(0deg) scale(1); }
+      to { transform: translate(15vw, 20vh) rotate(180deg) scale(1.1); } /* Less movement */
+    }
+    @keyframes move2 {
+      from { transform: translate(0, 0) rotate(0deg) scale(1); }
+      to { transform: translate(-20vw, -20vh) rotate(-150deg) scale(0.9); } /* Less movement */
+    }
+    @keyframes move3 {
+      from { transform: translate(0, 0) rotate(0deg) scale(1); }
+      to { transform: translate(10vw, -15vh) rotate(200deg) scale(1.05); } /* Less movement */
+    }
+    
+    /* --- GLASS BRUTALISM COMPONENTS --- */
+    .neo-panel {
+        background-color: rgba(20, 20, 30, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 2px solid var(--border-color);
+        box-shadow: 6px 6px 0px var(--border-color);
+        padding: 1.5rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .neo-button {
+        background-color: var(--primary-color);
+        color: #000;
+        border: 2px solid var(--border-color);
+        box-shadow: 3px 3px 0px var(--border-color);
+        font-family: var(--font-header);
+        text-transform: uppercase;
+        padding: 0.75rem 1.5rem;
+        font-weight: bold;
+        transition: all 0.1s ease-in-out;
+    }
+    .neo-button:hover:not(:disabled) {
+        transform: translate(1px, 1px);
+        box-shadow: 2px 2px 0px var(--border-color);
+    }
+    .neo-button:active:not(:disabled) {
+        transform: translate(3px, 3px);
+        box-shadow: 0px 0px 0px var(--border-color);
+    }
+    .neo-button:disabled {
+        filter: grayscale(1);
+        cursor: not-allowed;
+    }
+    
+    .neo-button.secondary {
+        background-color: var(--secondary-color);
+    }
+    .neo-button.accent {
+        background-color: var(--accent-color);
+    }
+
+    .neo-input {
+        background-color: rgba(0, 0, 0, 0.5);
+        border: 2px solid var(--border-color);
+        padding: 0.75rem;
+        font-family: var(--font-body);
+        font-size: 1rem;
+        width: 100%;
+        transition: box-shadow 0.2s;
+        color: var(--text-color);
+    }
+    .neo-input::placeholder {
+        color: rgba(245, 245, 245, 0.5);
+    }
+    .neo-input:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--bg-color), 0 0 0 4px var(--secondary-color);
+    }
+    
+    textarea.neo-input {
+        min-height: 8rem;
+    }
+
+    /* --- Skill Constellation Styles --- */
+    .react-flow__attribution { display: none; }
+    .react-flow__handle {
+      opacity: 0;
+    }
+    
+    .skill-node-star {
+      width: 130px;
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0.5rem;
+      font-family: var(--font-header);
+      color: var(--text-color);
+      transition: all 0.3s ease-in-out;
+      font-size: 14px;
+      cursor: pointer !important;
+      position: relative;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(77,121,255,0.1) 60%, transparent 100%);
+      border-radius: 50%;
+      animation: pulse 5s infinite alternate;
+    }
+    @keyframes pulse {
+      from { transform: scale(0.98); box-shadow: 0 0 10px rgba(77,121,255,0.3); }
+      to { transform: scale(1.02); box-shadow: 0 0 20px rgba(77,121,255,0.6); }
+    }
+    
+    .skill-node-star:hover {
+        transform: scale(1.1) !important;
+        box-shadow: 0 0 30px var(--primary-color);
+    }
+
+    .skill-node-star .node-label {
+      font-weight: bold;
+      text-transform: uppercase;
+      line-height: 1.2;
+      z-index: 2;
+    }
+
+    .skill-node-star.locked {
+      background: radial-gradient(circle, rgba(100,100,100,0.2) 0%, transparent 70%);
+      color: #888;
+      animation: none;
+      box-shadow: none;
+    }
+
+    .skill-node-star.learning::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border-radius: 50%;
+      border: 2px solid var(--primary-color);
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      animation: spin 8s linear infinite;
+    }
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .skill-node-star.mastered {
+        background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(30,234,126,0.4) 60%, transparent 100%);
+        box-shadow: 0 0 30px var(--accent-color);
+        animation: pulse-mastered 4s infinite alternate;
+        color: #000;
+    }
+    @keyframes pulse-mastered {
+      from { transform: scale(1); box-shadow: 0 0 25px var(--accent-color); }
+      to { transform: scale(1.05); box-shadow: 0 0 40px var(--accent-color); }
+    }
+    .skill-node-star.mastered::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 200%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+        transform: translate(-50%, -50%) rotate(45deg);
+        opacity: 0.7;
+    }
+    
+    .react-flow__edge-path {
+      stroke-width: 2;
+      stroke: rgba(255,255,255,0.5); /* FIX: Increased opacity and made solid */
+    }
+    
+    .react-flow__edge.highlighted .react-flow__edge-path {
+      stroke: var(--primary-color);
+      stroke-width: 3;
+      animation: pulse-edge 1s infinite;
+    }
+    @keyframes pulse-edge {
+        0% { stroke-opacity: 0.5; }
+        50% { stroke-opacity: 1; }
+        100% { stroke-opacity: 0.5; }
+    }
+    
+    .react-flow__edge.animated .react-flow__edge-path {
+        stroke: var(--accent-color);
+        stroke-width: 3;
+        stroke-dasharray: 5 5; /* FIX: Added dasharray to enable animation */
+        animation: flow 1s linear infinite;
+    }
+    @keyframes flow {
+        from { stroke-dashoffset: 10; }
+        to { stroke-dashoffset: 0; }
+    }
+    
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.5);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border: 2px solid transparent;
+      background-clip: content-box;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-color);
+    }
+    
+  </style>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+  <div class="lava-lamp-container">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.28.0",
+    "@supabase/supabase-js": "https://aistudiocdn.com/@supabase/supabase-js@^2.79.0",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
+    "reactflow/": "https://aistudiocdn.com/reactflow@^11.11.4/",
+    "reactflow": "https://aistudiocdn.com/reactflow@^11.11.4"
+  }
+}
+</script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
