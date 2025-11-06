@@ -51,8 +51,8 @@ It integrates **three intelligent subsystems** forming a closed cognitive feedba
 
 | Layer | Technology |
 |-------|-------------|
-| **Frontend** | React, TailwindCSS, D3.js / React-Flow |
-| **Backend** | Node.js, Firebase / Supabase |
+| **Frontend** | React, TailwindCSS, React flow  |
+| **Backend** | Node.js, Supabase |
 | **AI Layer** | Gemini API (for cognitive adaptation & resource mapping) |
 | **Data Flow** | JSON-based dynamic skill graph |
 | **UI/UX** | 2D interactive dashboard with animated cognitive avatar |
